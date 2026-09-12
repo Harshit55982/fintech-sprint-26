@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suraksha Rain | Policy Operations</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+    :root { --ink:#13251f; --muted:#66746e; --paper:#f8f7f1; --line:#dce1d9; --green:#176b52; --red:#b5453c; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:var(--paper); font-family:'DM Sans',sans-serif; }
+    header { height:72px; padding:0 max(5vw,28px); display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); background:#fbfaf5; }
+    .brand { font-size:20px; font-weight:700; letter-spacing:-.5px; }
+    .brand span { margin-right:6px; color:var(--green); font-size:25px; }
+    .connection { padding:8px 12px; border-radius:30px; color:var(--green); background:#e9f3e9; font:12px 'DM Mono',monospace; }
+    .connection.offline { color:var(--red); background:#fae8e5; }
+    main { max-width:1200px; margin:auto; padding:56px 28px 80px; }
+    .eyebrow { margin:0 0 13px; color:var(--green); font:11px 'DM Mono',monospace; letter-spacing:1.5px; }
+    .hero { display:flex; align-items:end; justify-content:space-between; gap:30px; margin-bottom:52px; }
+    .hero h1 { margin:0; font:700 clamp(38px,5vw,64px)/1.05 'Playfair Display',serif; letter-spacing:-2px; }
+    .hero h1 em { color:var(--green); }
+    .intro { max-width:470px; color:var(--muted); font-size:17px; line-height:1.5; }
+    .hero-card { min-width:250px; padding:24px; border-radius:12px; color:#fff; background:var(--ink); }
+    .hero-card > span { display:block; color:#a9bbb2; font-size:13px; }
+    .hero-card strong { display:block; margin:8px 0 22px; font:600 24px 'Playfair Display',serif; }
+    button { font:inherit; cursor:pointer; }
+    .hero-card button { width:100%; padding:12px; border:0; border-radius:5px; color:#1d301b; background:#d8ec8a; font-weight:700; }
+    .summary { display:grid; grid-template-columns:repeat(4,1fr); margin-bottom:32px; border:1px solid var(--line); border-radius:10px; background:#fffdf9; }
+    .metric { padding:20px 23px; border-right:1px solid var(--line); }
+    .metric:last-child { border:0; }
+    .metric span { color:var(--muted); font-size:13px; }
+    .metric strong { display:block; margin-top:6px; font:600 29px 'Playfair Display',serif; }
+    .panel { padding:27px; border:1px solid var(--line); border-radius:10px; background:#fffdf9; }
+    .section-heading { display:flex; align-items:start; justify-content:space-between; margin-bottom:21px; }
+    .section-heading h2 { margin:0; font:600 25px 'Playfair Display',serif; letter-spacing:-.5px; }
+    .text-button { border:0; color:var(--green); background:none; font-weight:600; text-decoration:underline; }
+    .policy-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:13px; }
+    .policy { padding:18px; border:1px solid var(--line); border-radius:8px; background:#fff; }
+    .policy-top,.details { display:flex; justify-content:space-between; gap:8px; }
+    .policy h3 { margin:0 0 5px; font-size:16px; }
+    .policy p { margin:0; color:var(--muted); font-size:13px; }
+    .tag { padding:5px 7px; border-radius:3px; white-space:nowrap; font:11px 'DM Mono',monospace; }
+    .safe { color:#297044; background:#e4f1df; }.risk_watch { color:#9c5a0a; background:#fff0d6; }.data_check,.exception { color:#a63d36; background:#f9e5e2; }.triggered,.payment_pending { color:#9a5d00; background:#fbe9ca; }.paid { color:#237452; background:#dff0e8; }
+    .details { margin-top:17px; padding-top:13px; border-top:1px solid #edf0eb; color:var(--muted); font-size:12px; }
+    .details b { color:var(--ink); font-size:13px; }
+    .claim-button { width:100%; margin-top:15px; padding:8px 10px; border:1px solid var(--green); border-radius:4px; color:var(--green); background:#fff; font-weight:700; }
+    .split { display:grid; grid-template-columns:1fr 1fr; gap:25px; margin-top:25px; }
+    .reading,.claim-row { display:flex; align-items:center; justify-content:space-between; padding:13px 0; border-top:1px solid var(--line); }
+    .reading:first-child { border:0; }.reading small,.claim-row small { display:block; margin-top:3px; color:var(--muted); }.reading b { font:600 18px 'Playfair Display',serif; }.source { color:var(--green); font:11px 'DM Mono',monospace; text-transform:uppercase; }.claims-empty { padding:25px 0; color:var(--muted); font-size:14px; }
+    .toast { position:fixed; right:24px; bottom:24px; max-width:360px; padding:15px 18px; border-radius:7px; color:#fff; background:var(--ink); box-shadow:0 10px 30px #13251f44; opacity:0; transform:translateY(100px); transition:.25s; }.toast.visible { opacity:1; transform:translateY(0); }
+    @media (max-width:750px) { main { padding:35px 18px; }.hero { align-items:start; flex-direction:column; }.hero-card { width:100%; }.summary { grid-template-columns:repeat(2,1fr); }.metric:nth-child(2) { border-right:0; }.metric:nth-child(-n+2) { border-bottom:1px solid var(--line); }.policy-grid,.split { grid-template-columns:1fr; }.split { gap:18px; } }
+  </style>
+</head>
+<body>
+  <header><div class="brand"><span>&#9748;</span>Suraksha Rain</div><div id="connection" class="connection">&#8226; Online</div></header>
+  <main>
+    <section class="hero"><div><p class="eyebrow">DAILY POLICY MONITORING</p><h1>Rainfall protection,<br><em>made dependable.</em></h1><p class="intro">Review verified readings and send fair, timely payouts to every insured farmer.</p></div><div class="hero-card"><span>Next assessment</span><strong>Ready now</strong><button id="assessButton" type="button">Run assessment &rarr;</button></div></section>
+    <section id="summary" class="summary"></section>
+    <section class="panel"><div class="section-heading"><div><p class="eyebrow">LIVE PORTFOLIO</p><h2>Insured policies</h2></div><button id="offlineButton" class="text-button" type="button">Test offline mode</button></div><div id="policies" class="policy-grid"></div></section>
+    <section class="split"><section class="panel"><div class="section-heading"><div><p class="eyebrow">DATA QUALITY</p><h2>Rainfall readings</h2></div></div><div id="readings"></div></section><section class="panel"><div class="section-heading"><div><p class="eyebrow">PAYMENTS</p><h2>Claim activity</h2></div></div><div id="claims" class="claims-empty">No payout instructions yet.</div></section></section>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <script>
+    const labels={SAFE:'Safe',RISK_WATCH:'Risk watch',DATA_CHECK:'Data check',TRIGGERED:'Triggered',PAYMENT_PENDING:'Payment pending',PAID:'Paid',EXCEPTION:'Exception'};
+    const state={policies:[
+      {policyId:'POL-20481',farmerName:'Asha Devi',villageId:'VIL-NAG-01',village:'Nagar',cropType:'Millet',area:2,rainfallTriggerMm:20,assessmentWindowDays:3,status:'RISK_WATCH'},
+      {policyId:'POL-20482',farmerName:'Ramesh Kumar',villageId:'VIL-NAG-01',village:'Nagar',cropType:'Millet',area:1.5,rainfallTriggerMm:20,assessmentWindowDays:3,status:'RISK_WATCH'},
+      {policyId:'POL-20483',farmerName:'Meera Bai',villageId:'VIL-KOT-02',village:'Kotra',cropType:'Pigeon pea',area:1,rainfallTriggerMm:15,assessmentWindowDays:3,status:'DATA_CHECK'}],
+      readings:[{source:'weather_station',villageId:'VIL-NAG-01',rainfallMm:3,confidenceScore:.96},{source:'satellite',villageId:'VIL-NAG-01',rainfallMm:4,confidenceScore:.91},{source:'weather_station',villageId:'VIL-KOT-02',rainfallMm:2,confidenceScore:.95},{source:'satellite',villageId:'VIL-KOT-02',rainfallMm:22,confidenceScore:.89}],
+      history:{'VIL-NAG-01':[5,4],'VIL-KOT-02':[3,2]},claims:[],online:true,recorded:false
+    };
+    const money=value=>String.fromCharCode(8377)+Number(value).toLocaleString('en-IN');
+    function notify(message){const toast=document.querySelector('#toast');toast.textContent=message;toast.classList.add('visible');setTimeout(()=>toast.classList.remove('visible'),4500);}
+    function render(){const count=status=>state.policies.filter(p=>p.status===status).length;document.querySelector('#summary').innerHTML=[['Active policies',state.policies.length],['Safe',count('SAFE')],['Need watching',count('RISK_WATCH')+count('TRIGGERED')],['Data checks',count('DATA_CHECK')]].map(([label,value])=>`<div class="metric"><span>${label}</span><strong>${value}</strong></div>`).join('');document.querySelector('#policies').innerHTML=state.policies.map(p=>`<article class="policy"><div class="policy-top"><div><h3>${p.farmerName}</h3><p>${p.village} &middot; ${p.cropType}</p></div><span class="tag ${p.status.toLowerCase()}">${labels[p.status]}</span></div><div class="details"><span>Rainfall<br><b>${p.totalRainfall??'—'} mm</b></span><span>Trigger<br><b>${p.rainfallTriggerMm} mm</b></span><span>Area<br><b>${p.area} ha</b></span></div>${p.status==='TRIGGERED'?`<button class="claim-button" data-id="${p.policyId}" type="button">Start automatic claim</button>`:''}</article>`).join('');document.querySelector('#readings').innerHTML=state.readings.map(r=>`<div class="reading"><div><span class="source">${r.source.replace('_',' ')}</span><small>${r.villageId} &middot; confidence ${Math.round(r.confidenceScore*100)}%</small></div><b>${r.rainfallMm} mm</b></div>`).join('');document.querySelector('#claims').innerHTML=state.claims.length?state.claims.map(c=>`<div class="claim-row"><span><b>${c.claimId}</b><br><small>${c.policyId}</small></span><span>${money(c.payout)}<br><small>${labels[c.status]}</small></span></div>`).join(''):'No payout instructions yet.';document.querySelectorAll('.claim-button').forEach(button=>button.addEventListener('click',()=>createClaim(button.dataset.id)));}
+    function verify(villageId){const trusted=state.readings.filter(r=>r.villageId===villageId&&['weather_station','satellite'].includes(r.source)&&r.confidenceScore>=.8),station=trusted.find(r=>r.source==='weather_station'),satellite=trusted.find(r=>r.source==='satellite');if(!station&&!satellite)return null;if(station&&satellite&&Math.abs(station.rainfallMm-satellite.rainfallMm)>12)return null;return(station||satellite).rainfallMm;}
+    function assess(){if(!state.online){notify('You are offline. The saved policy status is still available.');return;}const verified={'VIL-NAG-01':verify('VIL-NAG-01'),'VIL-KOT-02':verify('VIL-KOT-02')};if(!state.recorded){Object.entries(verified).forEach(([village,rainfall])=>{if(rainfall!==null)state.history[village].push(rainfall);});state.recorded=true;}state.policies.forEach(p=>{const rainfall=verified[p.villageId];if(rainfall===null){p.status='DATA_CHECK';return;}const windowRain=state.history[p.villageId].slice(-p.assessmentWindowDays);p.totalRainfall=windowRain.reduce((sum,value)=>sum+value,0);p.status=p.totalRainfall>=p.rainfallTriggerMm?'SAFE':'TRIGGERED';});render();notify('Assessment complete. Nagar policies are ready for automatic claims.');}
+    function createClaim(policyId){const policy=state.policies.find(p=>p.policyId===policyId),shortfall=Math.max(0,policy.rainfallTriggerMm-policy.totalRainfall),payout=Math.round(policy.area*1000*(1+shortfall/policy.rainfallTriggerMm));state.claims.unshift({claimId:'CLM-'+(3001+state.claims.length),policyId,payout,status:'PAYMENT_PENDING'});policy.status='PAYMENT_PENDING';render();notify('Payout instruction for '+money(payout)+' has been queued for payment.');}
+    function toggleOffline(){state.online=!state.online;const c=document.querySelector('#connection');c.classList.toggle('offline',!state.online);c.textContent=state.online?'• Online':'• Offline — cached view';notify(state.online?'Connection restored.':'Showing saved policy details.');}
+    document.querySelector('#assessButton').addEventListener('click',assess);document.querySelector('#offlineButton').addEventListener('click',toggleOffline);render();
+  </script>
+</body>
+</html>
