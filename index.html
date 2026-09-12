@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RainShield | Offline Crop Insurance</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header><div class="brand">🌾 RainShield</div><div class="header-actions"><div id="net" class="pill">● Online</div><button id="accountButton" class="account-button" onclick="openAuth()">Log in</button></div></header>
+<main>
+<section class="hero"><div><p class="eyebrow">FS-2604 DEMO</p><h1>Rain insurance that works even when the internet doesn't.</h1><p>Simple parametric crop insurance for small farmers.</p></div><button onclick="speak()">🔊 Listen</button></section>
+
+<nav class="tabs"><button class="active" onclick="show('home',this)">Home</button><button onclick="show('policy',this)">Policy</button><button onclick="show('rain',this)">Rainfall</button><button onclick="show('wallet',this)">Wallet</button><button onclick="show('audit',this)">Why?</button></nav>
+
+<section id="home" class="page active"><div class="grid"><div class="card"><h2>Farmer</h2><div class="big" id="farmerName">Ravi Kumar</div><small>ID: <span id="farmerId">F001</span></small></div><div class="card"><h2>Coverage</h2><div class="big">₹20,000</div><small>Groundnut • Kharif 2026</small></div><div class="card"><h2>Wallet</h2><div class="big" id="balance">₹0</div><small>Available offline</small></div></div><div class="card status"><h2 id="statusTitle">No active policy</h2><p id="statusText">Activate the ₹300 RainShield policy to begin.</p><button class="primary" onclick="show('policy')">View policy</button></div></section>
+
+<section id="policy" class="page"><div class="card"><p class="eyebrow">INSURANCE POLICY</p><h2>Monsoon RainShield</h2><div class="facts"><span>Premium<strong>₹300</strong></span><span>Coverage<strong>₹20,000</strong></span><span>Trigger<strong>&lt; 20 mm</strong></span><span>Payout<strong>40%</strong></span></div><div class="voice"><b>🔊 Policy explanation</b><p>Your policy pays automatically when verified rainfall is below 20 millimetres during the trigger period. No claim form is required.</p><button onclick="speak()">Play explanation</button></div><label class="check"><input type="checkbox" id="understood"> I understood how the payout works.</label><button class="primary" onclick="bindPolicy()">Activate for ₹300</button><p id="bindMsg"></p></div></section>
+
+<section id="rain" class="page"><div class="card"><div class="row"><div><p class="eyebrow">THREE SOURCES</p><h2>Rainfall verification</h2></div><button onclick="evaluate()">Evaluate</button></div><div class="oracles"><label>Station A<input id="o1" type="number" value="18"></label><label>Satellite B<input id="o2" type="number" value="19"></label><label>Gauge C<input id="o3" type="number" value="17"></label></div><div class="scenario"><button onclick="scenario('normal')">Normal drought</button><button onclick="scenario('compromised')">Compromised source</button><button onclick="scenario('stale')">Stale source</button></div><div id="decision" class="decision">Run evaluation to see the automatic decision.</div></div></section>
+
+<section id="wallet" class="page"><div class="card center"><div class="eyebrow">OFFLINE WALLET</div><div class="wallet">₹<span id="walletBalance">0</span></div><p>Funds remain visible without connectivity.</p><div id="history"></div></div></section>
+
+<section id="audit" class="page"><div class="card"><p class="eyebrow">PAYOUT RECONSTRUCTION</p><h2>Why was the farmer paid?</h2><div class="timeline"><div>1. <b>Policy</b><br>RainShield — threshold 20 mm</div><div>2. <b>Sources</b><br>Three independent rainfall observations</div><div>3. <b>Aggregation</b><br>Median protects against one extreme reading</div><div>4. <b>Trigger</b><br>Median rainfall below 20 mm</div><div>5. <b>Settlement</b><br>40% × ₹20,000 = <b>₹8,000</b></div></div><button class="danger" onclick="resetApp()">Reset demo</button></div></section>
+</main>
+<footer>RainShield • Hackathon prototype • Designed for low-connectivity users</footer>
+<div id="authModal" class="modal" aria-hidden="true" onclick="closeAuth(event)">
+<div class="auth-dialog" role="dialog" aria-modal="true" aria-labelledby="authTitle" onclick="event.stopPropagation()">
+<button class="modal-close" aria-label="Close" onclick="closeAuth()">×</button>
+<p class="eyebrow">RAINSHIELD ACCOUNT</p><h2 id="authTitle">Welcome back</h2><p id="authIntro" class="auth-intro">Log in to keep your policy and wallet close at hand.</p>
+<div class="auth-tabs"><button id="loginTab" class="selected" onclick="setAuthMode('login')">Log in</button><button id="signupTab" onclick="setAuthMode('signup')">Sign up</button></div>
+<form id="authForm" onsubmit="submitAuth(event)">
+<label id="nameField" class="hidden">Full name<input id="authName" autocomplete="name"></label>
+<label>Email<input id="authEmail" type="email" autocomplete="email" required></label>
+<label>Password<input id="authPassword" type="password" autocomplete="current-password" minlength="8" required></label>
+<div id="passwordRules" class="password-rules hidden">Use 8+ characters, including 1 capital letter, 1 number, and 1 special character.</div>
+<button id="authSubmit" class="primary auth-submit" type="submit">Log in</button><p id="authMessage" class="auth-message" role="alert"></p>
+</form></div></div>
+<script src="/static/app.js"></script>
+</body></html>
